@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<T> implements Deque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] elements;
     private int startIndex;
     private int endIndex;
@@ -44,7 +46,7 @@ public class ArrayDeque<T> implements Deque<T> {
     @Override
     public void printDeque() {
         for (int i = startIndex + 1; i < endIndex; i++) {
-            System.out.print(elements[i] + " ");
+            System.out.print(elements[i].toString() + " ");
         }
         System.out.println();
     }
@@ -132,5 +134,58 @@ public class ArrayDeque<T> implements Deque<T> {
             newElements[startIndex + i + 1] = elements[index++];
         }
         endIndex = startIndex + size + 1;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        ArrayDeque o = (ArrayDeque) obj;
+        if (o.size() != this.size()) {
+            return false;
+        }
+        int size = this.size();
+        for (int i = 0; i < size; ++i) {
+            if (!this.get(i).equals(o.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int index;
+
+        ArrayDequeIterator() {
+            index = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return index < size();
+        }
+
+        @Override
+        public T next() {
+            return get(index++);
+        }
     }
 }

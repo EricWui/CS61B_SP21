@@ -1,6 +1,8 @@
 package deque;
 
-public class LinkedListDeque<T> implements Deque<T> {
+import java.util.Iterator;
+
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private Node sentinel;
     private int size;
 
@@ -62,7 +64,7 @@ public class LinkedListDeque<T> implements Deque<T> {
     public void printDeque() {
         Node ptr = sentinel.next;
         while (size-- > 0) {
-            System.out.print(ptr.item + " ");
+            System.out.print(ptr.item.toString() + " ");
             ptr = ptr.next;
         }
         System.out.println();
@@ -146,6 +148,57 @@ public class LinkedListDeque<T> implements Deque<T> {
         return getRecursiveHelper(ptr.next, index - 1);
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator(sentinel);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+        LinkedListDeque o = (LinkedListDeque) obj;
+        if (this.size() != o.size()) {
+            return false;
+        }
+        for (int i = 0; i < size; ++i) {
+            if (!get(i).equals(o.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    private class LinkedListIterator implements Iterator<T> {
+        private Node cur;
+
+        LinkedListIterator(Node sentinel) {
+            this.cur = sentinel;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return cur.next != null && cur.next != sentinel;
+        }
+
+        @Override
+        public T next() {
+            cur = cur.next;
+            return cur.item;
+        }
+    }
 
     private class Node {
         T item;
