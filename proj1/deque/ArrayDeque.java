@@ -158,18 +158,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
         int size = this.size();
         for (int i = 0; i < size; ++i) {
-            if (!this.get(i).equals(o.get(i))) {
+            if (this.get(i) != o.get(i)) {
                 return false;
             }
         }
         return true;
     }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
 
     private class ArrayDequeIterator implements Iterator<T> {
         private int index;

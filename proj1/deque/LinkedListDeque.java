@@ -169,16 +169,11 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             return false;
         }
         for (int i = 0; i < size; ++i) {
-            if (!get(i).equals(o.get(i))) {
+            if (this.get(i) != o.get(i)) {
                 return false;
             }
         }
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
     private class LinkedListIterator implements Iterator<T> {

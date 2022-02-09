@@ -3,7 +3,7 @@ package gh2;
 
 import deque.ArrayDeque;
 import deque.Deque;
-import edu.princeton.cs.algs4.StdAudio;
+
 
 //Note: This file will not compile until you complete the Deque implementations
 public class GuitarString {
@@ -44,7 +44,6 @@ public class GuitarString {
     public void tic() {
         double removeElement = buffer.removeFirst();
         buffer.addLast((removeElement + buffer.get(0)) / 2 * DECAY);
-        StdAudio.play(removeElement);
     }
 
     /* Return the double at the front of the buffer. */
